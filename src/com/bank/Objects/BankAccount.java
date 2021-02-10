@@ -17,4 +17,17 @@ public class BankAccount extends Person{
     public double getAccountBalance(){
         return accountBalance;
     }
+
+    public void addMoney(double money){
+        this.accountBalance += money;
+    }
+
+    public boolean takeOut(double money){
+        boolean success = false;
+        if (accountBalance > money){
+            accountBalance -= money;
+            success = true;
+        }
+        return success;
+    }
 }

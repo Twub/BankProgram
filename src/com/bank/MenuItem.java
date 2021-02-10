@@ -7,7 +7,8 @@ public enum MenuItem {
     CREATE_ACCOUNT("3. Create new bank account"),
     EXIT_PROGRAM("4. Exit Program"),
     TAKE_OUT_MONEY("1. Take out money"),
-    PUT_IN_MONEY("2. Put in money");
+    PUT_IN_MONEY("2. Put in money"),
+    PRINT_BALANCE("3. Show balance");
 
 
     public String description;

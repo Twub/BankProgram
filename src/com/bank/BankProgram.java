@@ -28,7 +28,7 @@ public class BankProgram {
                     showAllAccounts();
                     break;
                 case SELECT_ACCOUNT:
-                    selectAccount();
+                    selectAccount(input);
                     break;
                 case CREATE_ACCOUNT:
                     createAccount(input);
@@ -45,9 +45,37 @@ public class BankProgram {
         }
     }
 
-    private void selectAccount(){
+    private void selectAccount(Scanner input){
         showAllAccounts();
-        
+        int selectedAccount = input.nextInt() - 1;
+        System.out.println("1. Take out money");
+        System.out.println("2. Put in money");
+        System.out.println("3. Show balance.");
+
+        int menuChoice = input.nextInt();
+
+        switch (menuChoice){
+            case 1:
+                System.out.println("How much money do you want to take out?");
+                double takeout = input.nextDouble();
+                boolean success = accounts.get(selectedAccount).takeOut(takeout);
+                if (success){
+                    System.out.println("Success you took out: " + takeout);
+                }else {
+                    System.out.println("You have not enough money on your account.");
+                }
+                break;
+            case 2:
+                System.out.println("How much do you want to put in?");
+                double prev = accounts.get(selectedAccount).getAccountBalance();
+                double money = input.nextDouble();
+                accounts.get(selectedAccount).addMoney(money);
+                System.out.println("Before: " + prev + " : After: " + accounts.get(selectedAccount).getAccountBalance());
+                break;
+            case 3:
+                System.out.println("Current balance is: " + accounts.get(selectedAccount).getAccountBalance());
+                break;
+        }
     }
 
     private void createAccount(Scanner input){
