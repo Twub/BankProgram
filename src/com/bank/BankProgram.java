@@ -33,6 +33,9 @@ public class BankProgram {
                 case CREATE_ACCOUNT:
                     createAccount(input);
                     break;
+                case EXIT_PROGRAM:
+                    isRunning = !isRunning;
+                    break;
             }
         }
     }
@@ -43,6 +46,7 @@ public class BankProgram {
             String lastName = accounts.get(i).getLastName();
             System.out.println((i+1) + ": " + firstName + " " + lastName);
         }
+        System.out.println("");
     }
 
     private void selectAccount(Scanner input){
@@ -51,6 +55,7 @@ public class BankProgram {
         System.out.println("1. Take out money");
         System.out.println("2. Put in money");
         System.out.println("3. Show balance.");
+        System.out.println("4. Show transactions");
 
         int menuChoice = input.nextInt();
 
@@ -75,14 +80,20 @@ public class BankProgram {
             case 3:
                 System.out.println("Current balance is: " + accounts.get(selectedAccount).getAccountBalance());
                 break;
+            case 4:
+                ArrayList<String> transactions = accounts.get(selectedAccount).getTransactions();
+                for (int i = 0; i < transactions.size(); i++){
+                    System.out.println((i+1) + ": " + transactions.get(i));
+                }
+                break;
         }
     }
 
     private void createAccount(Scanner input){
         System.out.println("Type in first name");
-        String firstName = input.nextLine();
+        String firstName = input.next();
         System.out.println("Type in last name");
-        String lastName = input.nextLine();
+        String lastName = input.next();
         System.out.println("Type in accountBalance");
         double balance = input.nextDouble();
         BankAccount account = Factory.createBankAccount(firstName, lastName, balance);
@@ -93,7 +104,8 @@ public class BankProgram {
     private MenuItem showAndGetMenuChoice(Scanner input){
         System.out.println("1. Show all accounts");
         System.out.println("2. Select account");
-        System.out.println("3. Exit Program");
+        System.out.println("3. Create bank account");
+        System.out.println("4. Exit Program");
 
         int menuInput = input.nextInt();
         switch (menuInput){
