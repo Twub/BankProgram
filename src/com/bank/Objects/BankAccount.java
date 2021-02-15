@@ -11,10 +11,12 @@ public class BankAccount extends Person{
     // account balance
     private double accountBalance;
     private ArrayList<String> transactions = new ArrayList<String>();
+    private int accountNumber;
 
-    public BankAccount(String firstName, String lastName, double startBalance){
-        super(firstName, lastName);
+    public BankAccount(int accountNumber, String firstName, double startBalance){
+        super(firstName);
         this.accountBalance = startBalance;
+        this.accountNumber = accountNumber;
     }
 
     // returns the account balance.
@@ -41,5 +43,13 @@ public class BankAccount extends Person{
 
     public ArrayList<String> getTransactions() {
         return transactions;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void addTransaction(String action){
+        transactions.add(action);
     }
 }

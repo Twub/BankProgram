@@ -11,6 +11,7 @@ public class BankProgram {
     private static BankProgram instance = null; // SINGLETON Can only create one instance of this class
     private ArrayList<BankAccount> accounts = new ArrayList<BankAccount>(); // stores all accounts.
     private boolean isRunning = true;
+    private ArrayList<String> transactions = new ArrayList<String>();
 
     // private constructor for this class, so that you cant create multiple instances of this class
     // you need to get the only instance from the getInstance() method.
@@ -38,6 +39,94 @@ public class BankProgram {
                     break;
             }
         }
+    }
+
+    public void start(){
+
+    }
+
+    // create account
+    private void AC(int accountNumber, String accountHolderFirstname, double startBalance){
+        if (isExisting(accountNumber)){
+            System.out.println("Konto finns redan: " + accountNumber);
+        }else {
+            BankAccount account = new BankAccount(accountNumber, accountHolderFirstname, startBalance);
+            account.addTransaction("NY" + accountNumber + "" + startBalance);
+            accounts.add(account);
+        }
+    }
+
+    // put in money
+    private void IN(int accountNumber, double balance){
+        BankAccount account = null;
+        for (int i = 0; i < accounts.size(); i++){
+            if (accounts.get(i).getAccountNumber() == accountNumber){
+                account = accounts.get(i);
+            }
+        }
+        if (account == null){
+            System.out.println("Kontonummer: " + accountNumber + " saknas");
+            return;
+        }
+        double oldBalance = account.getAccountBalance();
+        account.addMoney(balance);
+        System.out.println("Saldo: " + oldBalance + " Belopp: " + balance + " Nytt saldo: " + account.getAccountBalance());
+        account.addTransaction("IN" + balance);
+    }
+
+    // take out money
+    private void UT(int accountNumber, double balance){
+        BankAccount account = null;
+        for (int i = 0; i < accounts.size(); i++){
+            if (accounts.get(i).getAccountNumber() == accountNumber){
+                account = accounts.get(i);
+            }
+        }
+        if (account == null){
+            System.out.println("Kontonummer: " + accountNumber + " saknas");
+            return;
+        }
+        if (account.getAccountBalance() >= balance){
+            double oldBalance = account.getAccountBalance();
+            System.out.println("Saldo: " + oldBalance + " Belopp: " + balance + " Nytt saldo: " + account.getAccountBalance());
+            account.addTransaction("UT" + balance);
+        }else {
+            System.out.println("MEDGES EJ (" + account.getAccountBalance() + ", " + balance + ")");
+        }
+    }
+
+    // transaction list
+    private void AB(int accountNumber){
+        BankAccount account = null;
+        for (int i = 0; i < accounts.size(); i++){
+            if (accounts.get(i).getAccountNumber() == accountNumber){
+                account = accounts.get(i);
+            }
+        }
+        if (account == null){
+            System.out.println("Kontonummer: " + accountNumber + " saknas");
+            return;
+        }
+        ArrayList<String> transactions = account.getTransactions();
+        for (String transaction : transactions){
+            System.out.println(transaction);
+        }
+    }
+
+    private void NS(){
+        for (BankAccount account : accounts){
+            System.out.println("Innehavare: " + account.getFirstName() + ". Saldo: " + account.getAccountBalance());
+        }
+    }
+
+    // check if account number already exist.
+    private boolean isExisting(int accountNumber){
+        for (int i = 0; i < accounts.size(); i++){
+            if (accounts.get(i).getAccountNumber() == accountNumber){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void showAllAccounts(){
