@@ -58,12 +58,7 @@ public class BankProgram {
 
     // put in money
     private void IN(int accountNumber, double balance){
-        BankAccount account = null;
-        for (int i = 0; i < accounts.size(); i++){
-            if (accounts.get(i).getAccountNumber() == accountNumber){
-                account = accounts.get(i);
-            }
-        }
+        BankAccount account = getAccount(accountNumber);
         if (account == null){
             System.out.println("Kontonummer: " + accountNumber + " saknas");
             return;
@@ -76,12 +71,7 @@ public class BankProgram {
 
     // take out money
     private void UT(int accountNumber, double balance){
-        BankAccount account = null;
-        for (int i = 0; i < accounts.size(); i++){
-            if (accounts.get(i).getAccountNumber() == accountNumber){
-                account = accounts.get(i);
-            }
-        }
+        BankAccount account = getAccount(accountNumber);
         if (account == null){
             System.out.println("Kontonummer: " + accountNumber + " saknas");
             return;
@@ -97,12 +87,7 @@ public class BankProgram {
 
     // transaction list
     private void AB(int accountNumber){
-        BankAccount account = null;
-        for (int i = 0; i < accounts.size(); i++){
-            if (accounts.get(i).getAccountNumber() == accountNumber){
-                account = accounts.get(i);
-            }
-        }
+        BankAccount account = getAccount(accountNumber);
         if (account == null){
             System.out.println("Kontonummer: " + accountNumber + " saknas");
             return;
@@ -111,6 +96,17 @@ public class BankProgram {
         for (String transaction : transactions){
             System.out.println(transaction);
         }
+    }
+
+    // get account with corrent accountNumber
+    private BankAccount getAccount(int accountNumber){
+        BankAccount account = null;
+        for (int i = 0; i < accounts.size(); i++){
+            if (accounts.get(i).getAccountNumber() == accountNumber){
+                account = accounts.get(i);
+            }
+        }
+        return account;
     }
 
     private void NS(){
